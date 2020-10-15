@@ -1,2 +1,2 @@
-# sandbox
-Just a sandbox for various coding challenges
+# playground
+Just a playground for various coding challenges
