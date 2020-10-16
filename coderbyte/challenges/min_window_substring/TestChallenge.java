@@ -11,8 +11,14 @@ public class TestChallenge implements ITest {
     @Override
     @Test
     public void perform() {
-        assertEquals("12", challenge.minWindowSubstring("1", "2"));
-        assertEquals("abcXYZ", challenge.minWindowSubstring("abc", "XYZ"));
+        assertEquals("dae", challenge.minWindowSubstring("aaabaaddae", "aed"));
+        assertEquals("aabd", challenge.minWindowSubstring("aabdccdbcacd", "aad"));
+        assertEquals("aksfaje", challenge.minWindowSubstring("ahffaksfajeeubsne", "jefaa"));
+        assertEquals("affhkkse", challenge.minWindowSubstring("aaffhkksemckelloe", "fhea"));
+
+        assertEquals("", challenge.minWindowSubstring("qwe", ""));
+        assertEquals("", challenge.minWindowSubstring("qwe", "qqwe"));
+        assertEquals("", challenge.minWindowSubstring("qwe", "r"));
     }
 
 }
