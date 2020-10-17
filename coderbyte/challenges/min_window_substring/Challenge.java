@@ -1,27 +1,21 @@
 package coderbyte.challenges.min_window_substring;
 
+import util.array.*;
+
 public class Challenge implements IChallenge {
-
-    private int indexInCharArray(char[] array, char element) {
-        for (int i = 0; i < array.length; i++)
-            if (array[i] == element)
-                return i;
-        return -1;
-    }
-
-    private char[] truncateCharArray(char[] origin, int index)
-    {
-        char[] result = new char[origin.length == 0 ? 0 : origin.length - 1];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = origin[i >= index ? i + 1 : i];
-        }
-        return result;
-    }
 
     @Override
     public String minWindowSubstring(String where, String what) {
-        int lenWhere = where.length(), lenWhat = what.length();
         String minMatch = ""; // the resulting minimal substring
+
+        if (where == null)
+            where = "";
+
+        if (what == null)
+            what = "";
+
+        int lenWhere = where.length();
+        int lenWhat = what.length();
         if (lenWhere < lenWhat || lenWhat == 0)
             return minMatch;
 
@@ -32,12 +26,18 @@ public class Challenge implements IChallenge {
 
             char[] charsWhat = what.toCharArray(); // the second argument as a char array
             for (int j = i; j < lenWhere; j++) {
-                int indexWhat = indexInCharArray(charsWhat, where.charAt(j));
+                ICharArray charArray;
+                try {
+                    charArray = new CharArray(charsWhat);
+                } catch (NullArrayException e) {
+                    continue;
+                }
+
+                int indexWhat = charArray.indexOf(where.charAt(j));
                 if (indexWhat == -1)
                     continue;
 
-                charsWhat = truncateCharArray(charsWhat, indexWhat);
-                if (charsWhat.length != 0)
+                if (charArray.truncate(indexWhat).length != 0)
                     continue;
 
                 // match found
