@@ -30,5 +30,4 @@ public class CharArray implements ICharArray {
         }
         return result;
     }
-    
 }

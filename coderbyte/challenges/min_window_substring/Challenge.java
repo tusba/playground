@@ -37,7 +37,8 @@ public class Challenge implements IChallenge {
                 if (indexWhat == -1)
                     continue;
 
-                if (charArray.truncate(indexWhat).length != 0)
+                charsWhat = charArray.truncate(indexWhat);
+                if (charsWhat.length != 0)
                     continue;
 
                 // match found
