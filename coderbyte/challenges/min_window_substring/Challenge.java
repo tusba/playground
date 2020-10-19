@@ -1,14 +1,8 @@
 package coderbyte.challenges.min_window_substring;
 
-import decorators.DSyncResult;
-import entities.IResult;
-import entities.Result;
 import util.array.*;
 
 public class Challenge implements IChallenge {
-
-    /** thread count */
-    private static final int THREADS = 1;
 
     /** where to search for */
     private String haystack;
@@ -16,30 +10,13 @@ public class Challenge implements IChallenge {
     /** what to search for */
     private String needle;
 
-    /** an incapsulation of the minimal found substring */
-    private DSyncResult<String, IResult<String>> minWindow;
-
-    public Challenge() {
-        minWindow = new DSyncResult<>();
-        minWindow.decorate(new Result<>(""));
-    }
-
-    public Challenge(DSyncResult<String, IResult<String>> minWindow) {
-        this.minWindow = minWindow;
-    }
-
-    private String getMinWindow() {
-        return minWindow.getValue();
-    }
-
-    private void setMinWindow(String value) {
-        minWindow.setValue(value);
-    }
+    /** the minimal found substring */
+    private String minWindow = "";
 
     private void init(String where, String what) {
         haystack = where == null ? "" : where;
         needle = what == null ? "" : what;
-        setMinWindow("");
+        minWindow = "";
     }
 
     /**
@@ -65,16 +42,16 @@ public class Challenge implements IChallenge {
                 &&
                 (
                     // some substring was found for the first time
-                    getMinWindow().equals("")
+                    minWindow.equals("")
                     ||
                     // a shorter substring was found
-                    getMinWindow().length() > j + 1 - fromHaystackIndex
+                    minWindow.length() > j + 1 - fromHaystackIndex
                 )
             ) {
-                setMinWindow(haystack.substring(fromHaystackIndex, j + 1));
+                minWindow = haystack.substring(fromHaystackIndex, j + 1);
 
                 // no more searching if the exact needle was found
-                if (getMinWindow().equals(needle))
+                if (minWindow.equals(needle))
                     return true;
             }
         }
@@ -89,7 +66,7 @@ public class Challenge implements IChallenge {
         int lenWhere = haystack.length();
         int lenWhat = needle.length();
         if (lenWhere < lenWhat || lenWhat == 0)
-            return getMinWindow();
+            return minWindow;
 
         for (int i = 0; i <= lenWhere - lenWhat; i++) {
             // no more searching if the needle doesn't contain the current character
@@ -97,10 +74,10 @@ public class Challenge implements IChallenge {
                 continue;
 
             if (actualSearch(i)) {
-                return getMinWindow();
+                return minWindow;
             }
         }
-        return getMinWindow();
+        return minWindow;
     }
 
 }
