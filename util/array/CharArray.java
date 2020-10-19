@@ -4,11 +4,15 @@ public class CharArray implements ICharArray {
 
     private char[] source;
 
-    public CharArray(char[] source) throws NullArrayException {
-        if (source == null) {
+    private CharArray(char[] source) {
+        this.source = source == null ? new char[0] : source;
+    }
+
+    private CharArray(char[] source, boolean throwOnNull) throws NullArrayException {
+        this(source);
+        if (source == null && throwOnNull) {
             throw new NullArrayException();
         }
-        this.source = source;
     }
 
     @Override
@@ -29,5 +33,16 @@ public class CharArray implements ICharArray {
             result[i] = source[i >= index ? i + 1 : i];
         }
         return result;
+    }
+
+    /**
+     * Factory
+     */
+    public static CharArray wrap(char[] source) {
+        try {
+            return new CharArray(source, true);
+        } catch (NullArrayException e) {
+            return new CharArray(source);
+        }
     }
 }

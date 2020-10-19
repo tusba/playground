@@ -8,9 +8,9 @@ import org.junit.platform.commons.annotation.Testable;
 public class TestCharArray {
 
     @Test
-    public void tryIndexOf() throws NullArrayException {
+    public void tryIndexOf() {
         char[] array = new char[] {'Q', 'w', 'e', '1', '2', '3'};
-        ICharArray wrapper = new CharArray(array);
+        ICharArray wrapper = CharArray.wrap(array);
 
         assertEquals(-1, wrapper.indexOf('q'));
         assertEquals(0, wrapper.indexOf('Q'));
@@ -19,15 +19,15 @@ public class TestCharArray {
     }
 
     @Test
-    public void tryTruncate() throws NullArrayException {
+    public void tryTruncate() {
         char[] array = new char[] {'Q', 'w', 'e', '1', '2', '3'};
-        ICharArray wrapper = new CharArray(array);
+        ICharArray wrapper = CharArray.wrap(array);
 
-        assertEquals("Qwe123", new String(wrapper.truncate(-1)));
-        assertEquals("we123", new String(wrapper.truncate(0)));
-        assertEquals("Qw123", new String(wrapper.truncate(2)));
-        assertEquals("Qwe12", new String(wrapper.truncate(5)));
-        assertEquals("Qwe123", new String(wrapper.truncate(6)));
+        assertEquals("Qwe123", String.valueOf(wrapper.truncate(-1)));
+        assertEquals("we123", String.valueOf(wrapper.truncate(0)));
+        assertEquals("Qw123", String.valueOf(wrapper.truncate(2)));
+        assertEquals("Qwe12", String.valueOf(wrapper.truncate(5)));
+        assertEquals("Qwe123", String.valueOf(wrapper.truncate(6)));
     }
 
 }

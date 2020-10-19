@@ -4,55 +4,80 @@ import util.array.*;
 
 public class Challenge implements IChallenge {
 
-    @Override
-    public String minWindowSubstring(String where, String what) {
-        String minMatch = ""; // the resulting minimal substring
+    /** where to search for */
+    private String haystack;
 
-        if (where == null)
-            where = "";
+    /** what to search for */
+    private String needle;
 
-        if (what == null)
-            what = "";
+    /** the minimal found substring */
+    private String minWindow = "";
 
-        int lenWhere = where.length();
-        int lenWhat = what.length();
-        if (lenWhere < lenWhat || lenWhat == 0)
-            return minMatch;
+    private void init(String where, String what) {
+        haystack = where == null ? "" : where;
+        needle = what == null ? "" : what;
+        minWindow = "";
+    }
 
-        for (int i = 0; i <= lenWhere - lenWhat; i++) {
-            // optimization
-            if (what.indexOf(where.charAt(i)) == -1)
+    /**
+     * Perform the actual search starting from the specified haystack's index
+     * Return whether the found substring exactly equals to the needle
+     */
+    private boolean actualSearch(int fromHaystackIndex) {
+        char[] charsWhat = needle.toCharArray();
+        int lenWhere = haystack.length();
+
+        for (int j = fromHaystackIndex; j < lenWhere; j++) {
+            ICharArray charArray = CharArray.wrap(charsWhat);
+
+            int indexWhat = charArray.indexOf(haystack.charAt(j));
+            if (indexWhat == -1)
                 continue;
 
-            char[] charsWhat = what.toCharArray(); // the second argument as a char array
-            for (int j = i; j < lenWhere; j++) {
-                ICharArray charArray;
-                try {
-                    charArray = new CharArray(charsWhat);
-                } catch (NullArrayException e) {
-                    continue;
-                }
+            charsWhat = charArray.truncate(indexWhat);
 
-                int indexWhat = charArray.indexOf(where.charAt(j));
-                if (indexWhat == -1)
-                    continue;
+            if (
+                // search finished
+                charsWhat.length == 0
+                &&
+                (
+                    // some substring was found for the first time
+                    minWindow.equals("")
+                    ||
+                    // a shorter substring was found
+                    minWindow.length() > j + 1 - fromHaystackIndex
+                )
+            ) {
+                minWindow = haystack.substring(fromHaystackIndex, j + 1);
 
-                charsWhat = charArray.truncate(indexWhat);
-                if (charsWhat.length != 0)
-                    continue;
-
-                // match found
-                if (minMatch.length() == 0 || minMatch.length() > j + 1 - i) {
-                    // less length found
-                    minMatch = where.substring(i, j + 1);
-
-                    // optimization
-                    if (minMatch.length() == lenWhat)
-                        return minMatch;
-                }
+                // no more searching if the exact needle was found
+                if (minWindow.equals(needle))
+                    return true;
             }
         }
-        return minMatch;
+
+        return false;
+    }
+
+    @Override
+    public String minWindowSubstring(String where, String what) {
+        init(where, what);
+
+        int lenWhere = haystack.length();
+        int lenWhat = needle.length();
+        if (lenWhere < lenWhat || lenWhat == 0)
+            return minWindow;
+
+        for (int i = 0; i <= lenWhere - lenWhat; i++) {
+            // no more searching if the needle doesn't contain the current character
+            if (needle.indexOf(haystack.charAt(i)) == -1)
+                continue;
+
+            if (actualSearch(i)) {
+                return minWindow;
+            }
+        }
+        return minWindow;
     }
 
 }
