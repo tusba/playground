@@ -1,9 +1,7 @@
 package coderbyte.challenges.min_window_substring;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.Duration;
-
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.Test;
 import util.test.ITest;
@@ -50,4 +48,5 @@ public class TestChallengeConcurrent implements ITest {
     public void multiplePerform() {
         assertTimeout(Duration.ofSeconds(10), new Multiple(10));
     }
+
 }

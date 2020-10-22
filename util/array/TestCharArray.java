@@ -1,11 +1,24 @@
 package util.array;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.annotation.Testable;
 
 @Testable
 public class TestCharArray {
+
+    @Test
+    public void tryInitNull() {
+        assertDoesNotThrow(new Executable() {
+
+            @Override
+            public void execute() throws Throwable {
+                CharArray.wrap(null);
+            }
+
+        });
+    }
 
     @Test
     public void tryIndexOf() {
