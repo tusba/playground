@@ -23,9 +23,11 @@ public class TestCharArray {
         char[] array = new char[] {'Q', 'w', 'e', '1', '2', '3'};
         ICharArray wrapper = CharArray.wrap(array);
 
+        assertNotSame(array, wrapper.truncate(-2));
         assertEquals("Qwe123", String.valueOf(wrapper.truncate(-1)));
         assertEquals("we123", String.valueOf(wrapper.truncate(0)));
         assertEquals("Qw123", String.valueOf(wrapper.truncate(2)));
+        assertArrayEquals(new char[] {'Q', 'w', 'e', '2', '3'}, wrapper.truncate(3));
         assertEquals("Qwe12", String.valueOf(wrapper.truncate(5)));
         assertEquals("Qwe123", String.valueOf(wrapper.truncate(6)));
     }
