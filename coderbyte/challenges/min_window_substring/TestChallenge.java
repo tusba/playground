@@ -1,15 +1,17 @@
 package coderbyte.challenges.min_window_substring;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.annotation.Testable;
+import util.annotation.ChallengeTest;
 import util.test.ITest;
 
-public class TestChallenge implements ITest {
+@Testable
+class TestChallenge implements ITest {
 
     private final IChallenge challenge = new Challenge();
 
     @Override
-    @Test
+    @ChallengeTest
     public void perform() {
         assertEquals("dae", challenge.minWindowSubstring("aaabaaddae", "aed"));
         assertEquals("aabd", challenge.minWindowSubstring("aabdccdbcacd", "aad"));

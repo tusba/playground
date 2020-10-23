@@ -2,14 +2,14 @@ package util.array;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.annotation.Testable;
+import util.annotation.UtilityTest;
 
 @Testable
-public class TestCharArray {
+class TestCharArray {
 
-    @Test
-    public void tryInitNull() {
+    @UtilityTest
+    void tryInitNull() {
         assertDoesNotThrow(new Executable() {
 
             @Override
@@ -20,8 +20,8 @@ public class TestCharArray {
         });
     }
 
-    @Test
-    public void tryIndexOf() {
+    @UtilityTest
+    void tryIndexOf() {
         char[] array = new char[] {'Q', 'w', 'e', '1', '2', '3'};
         ICharArray wrapper = CharArray.wrap(array);
 
@@ -31,8 +31,8 @@ public class TestCharArray {
         assertEquals(5, wrapper.indexOf('3'));
     }
 
-    @Test
-    public void tryTruncate() {
+    @UtilityTest
+    void tryTruncate() {
         char[] array = new char[] {'Q', 'w', 'e', '1', '2', '3'};
         ICharArray wrapper = CharArray.wrap(array);
 

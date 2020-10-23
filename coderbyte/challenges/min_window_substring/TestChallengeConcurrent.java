@@ -3,10 +3,12 @@ package coderbyte.challenges.min_window_substring;
 import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.annotation.Testable;
+import util.annotation.ChallengeTest;
 import util.test.ITest;
 
-public class TestChallengeConcurrent implements ITest {
+@Testable
+class TestChallengeConcurrent implements ITest {
 
     private final IChallenge challenge = new ChallengeConcurrent();
 
@@ -42,14 +44,14 @@ public class TestChallengeConcurrent implements ITest {
         assertEquals("", challenge.minWindowSubstring("qwe", "r"));
     }
 
-    @Test
+    @ChallengeTest
     @Override
     public void perform() {
         baseTest();
     }
 
-    @Test
-    public void multiplePerform() {
+    @ChallengeTest
+    void multiplePerform() {
         assertTimeout(Duration.ofSeconds(10), new Multiple(10));
     }
 
