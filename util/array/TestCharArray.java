@@ -1,13 +1,17 @@
 package util.array;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.commons.annotation.Testable;
 import util.annotation.UtilityTest;
 
+@DisplayName("Character array wrapper")
 @Testable
 class TestCharArray {
 
+    @DisplayName("Initialize with a null value")
     @UtilityTest
     void tryInitNull() {
         assertDoesNotThrow(new Executable() {
@@ -20,6 +24,7 @@ class TestCharArray {
         });
     }
 
+    @DisplayName("Get the first index of a character")
     @UtilityTest
     void tryIndexOf() {
         char[] array = new char[] {'Q', 'w', 'e', '1', '2', '3'};
@@ -31,6 +36,7 @@ class TestCharArray {
         assertEquals(5, wrapper.indexOf('3'));
     }
 
+    @DisplayName("Remove a character at the specified index")
     @UtilityTest
     void tryTruncate() {
         char[] array = new char[] {'Q', 'w', 'e', '1', '2', '3'};

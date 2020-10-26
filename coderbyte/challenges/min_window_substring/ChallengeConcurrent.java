@@ -1,8 +1,9 @@
 package coderbyte.challenges.min_window_substring;
 
+import static java.util.logging.Logger.*;
+
 import decorators.DSyncResult;
 import entities.Result;
-import static java.util.logging.Logger.*;
 import util.array.*;
 
 public class ChallengeConcurrent implements IChallenge, Runnable {
