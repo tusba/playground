@@ -23,22 +23,34 @@ class TestCharArray {
         assertAll("for " + (target != null ? "\"" + target + "\"" : "null") + " string",
             () -> {
                 assertNotNull(target);
+                assertNotEquals("", target);
 
                 // executed only if the previous assertion is valid
                 assertAll("the first index of a character",
-                    () -> assertEquals(wrapper.indexOf(target.charAt(0)), 0),
-                    () -> assertEquals(wrapper.indexOf(target.charAt(targetLen - 1)), targetLen - 1)
+                    () -> assertEquals(0, wrapper.indexOf(target.charAt(0))),
+                    () -> assertEquals(targetLen - 1, wrapper.indexOf(target.charAt(targetLen - 1)))
                 );
             },
             () -> {
                 assertNotNull(target);
+                assertNotEquals("", target);
 
                 // executed only if the previous assertion is valid
                 assertAll("remove a character by its index",
-                    () -> assertArrayEquals(wrapper.truncate(-1), targetChars),
-                    () -> assertArrayEquals(wrapper.truncate(0), target.substring(1).toCharArray()),
-                    () -> assertArrayEquals(wrapper.truncate(targetLen - 1), target.substring(0, targetLen - 1).toCharArray()),
-                    () -> assertArrayEquals(wrapper.truncate(targetLen), targetChars)
+                    () -> assertArrayEquals(targetChars, wrapper.truncate(-1)),
+                    () -> assertArrayEquals(target.substring(1).toCharArray(), wrapper.truncate(0)),
+                    () -> assertArrayEquals(target.substring(0, targetLen - 1).toCharArray(), wrapper.truncate(targetLen - 1)),
+                    () -> assertArrayEquals(targetChars, wrapper.truncate(targetLen))
+                );
+            },
+            () -> {
+                assertNotNull(target);
+                assertNotEquals("", target);
+
+                char[] reverted = wrapper.reverse();
+                assertAll("reverse character order",
+                    () -> assertEquals(target.charAt(0), reverted[targetLen - 1]),
+                    () -> assertEquals(target.charAt(targetLen - 1), reverted[0])
                 );
             }
         );
@@ -74,6 +86,22 @@ class TestCharArray {
             () -> assertEquals(2, wrapper.indexOf('e')),
             () -> assertEquals(5, wrapper.indexOf('3'))
         );
+    }
+
+    @DisplayName("Reverse the character order")
+    @UtilityTest
+    void tryReverse() {
+        String source = "Qwe123";
+        ICharArray wrapper = CharArray.split(source);
+        assertArrayEquals(new char[] {'3', '2', '1', 'e', 'w', 'Q'}, wrapper.reverse());
+
+        wrapper = CharArray.split("");
+        assertArrayEquals(new char[0], wrapper.reverse(), () -> "An empty array stays as is");
+
+        char[] palindrome = new char[] {'t', 'e', 'n', 'e', 't'};
+        char[] reverted = CharArray.wrap(palindrome).reverse();
+        assertArrayEquals(palindrome, reverted);
+        assertNotSame(palindrome, reverted, () -> "Should create a new array");
     }
 
     @DisplayName("Remove a character at the specified index")

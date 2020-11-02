@@ -24,6 +24,16 @@ public class CharArray implements ICharArray {
     }
 
     @Override
+    public char[] reverse() {
+        int count = source.length;
+        char[] result = new char[count];
+        for (int i = 0; i < count; i++) {
+            result[i] = source[count - 1 - i];
+        }
+        return result;
+    }
+
+    @Override
     public char[] truncate(int index) {
         if (index < 0 || index >= source.length)
             return source.clone();

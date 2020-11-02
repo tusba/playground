@@ -172,7 +172,7 @@ public class ChallengeConcurrent implements IChallenge, Runnable {
                 continue;
             }
 
-            var newThread = new Thread(new ChallengeConcurrent(i), "From index " + i);
+            Thread newThread = new Thread(new ChallengeConcurrent(i), "From index " + i);
             try {
                 newThread.join();
             } catch (InterruptedException e) {
