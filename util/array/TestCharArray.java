@@ -11,6 +11,39 @@ import util.annotation.UtilityTest;
 @Testable
 class TestCharArray {
 
+    @DisplayName("Run all available tests")
+    @UtilityTest
+    void tryRunAll() {
+        String target = "Abc789";
+        int targetLen = target.length();
+        char[] targetChars = target.toCharArray();
+
+        ICharArray wrapper = CharArray.split(target);
+
+        assertAll("for " + (target != null ? "\"" + target + "\"" : "null") + " string",
+            () -> {
+                assertNotNull(target);
+
+                // executed only if the previous assertion is valid
+                assertAll("the first index of a character",
+                    () -> assertEquals(wrapper.indexOf(target.charAt(0)), 0),
+                    () -> assertEquals(wrapper.indexOf(target.charAt(targetLen - 1)), targetLen - 1)
+                );
+            },
+            () -> {
+                assertNotNull(target);
+
+                // executed only if the previous assertion is valid
+                assertAll("remove a character by its index",
+                    () -> assertArrayEquals(wrapper.truncate(-1), targetChars),
+                    () -> assertArrayEquals(wrapper.truncate(0), target.substring(1).toCharArray()),
+                    () -> assertArrayEquals(wrapper.truncate(targetLen - 1), target.substring(0, targetLen - 1).toCharArray()),
+                    () -> assertArrayEquals(wrapper.truncate(targetLen), targetChars)
+                );
+            }
+        );
+    }
+
     @DisplayName("Initialize with a null value")
     @UtilityTest
     void tryInitNull() {
@@ -22,6 +55,11 @@ class TestCharArray {
             }
 
         }, () -> "Should resolve to an empty array rather than throw");
+
+        assertDoesNotThrow(
+            () -> CharArray.split(null),
+            () -> "Should not throw but resolve to an empty array"
+        );
     }
 
     @DisplayName("Get the first index of a character")

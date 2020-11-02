@@ -36,7 +36,7 @@ public class CharArray implements ICharArray {
     }
 
     /**
-     * Factory
+     * Character array based factory
      */
     public static CharArray wrap(char[] source) {
         try {
@@ -44,5 +44,12 @@ public class CharArray implements ICharArray {
         } catch (NullArrayException e) {
             return new CharArray(source);
         }
+    }
+
+    /**
+     * String based factory
+     */
+    public static CharArray split(String source) {
+        return wrap(source != null ? source.toCharArray() : null);
     }
 }
