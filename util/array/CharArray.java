@@ -56,6 +56,10 @@ public class CharArray implements ICharArray {
         }
     }
 
+    public static CharArray wrapStrictly(char[] source) throws NullArrayException {
+        return new CharArray(source, true);
+    }
+
     /**
      * String based factory
      */

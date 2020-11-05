@@ -11,6 +11,8 @@ import util.annotation.UtilityTest;
 @Testable
 class TestCharArray {
 
+    private static final String BASE_TEMPLATE = "Qwe123";
+
     @DisplayName("Run all available tests")
     @UtilityTest
     void tryRunAll() {
@@ -72,6 +74,12 @@ class TestCharArray {
             () -> CharArray.split(null),
             () -> "Should not throw but resolve to an empty array"
         );
+
+        Exception exception = assertThrows(NullArrayException.class,
+            () -> CharArray.wrapStrictly(null),
+            () -> "Should throw on an empty array"
+        );
+        assertEquals("The array cannot be null", exception.getMessage());
     }
 
     @DisplayName("Get the first index of a character")
@@ -91,8 +99,7 @@ class TestCharArray {
     @DisplayName("Reverse the character order")
     @UtilityTest
     void tryReverse() {
-        String source = "Qwe123";
-        ICharArray wrapper = CharArray.split(source);
+        ICharArray wrapper = CharArray.split(BASE_TEMPLATE);
         assertArrayEquals(new char[] {'3', '2', '1', 'e', 'w', 'Q'}, wrapper.reverse());
 
         wrapper = CharArray.split("");
@@ -116,8 +123,8 @@ class TestCharArray {
         assertArrayEquals(new char[] {'Q', 'w', 'e', '2', '3'}, wrapper.truncate(3));
         assertEquals("Qwe12", String.valueOf(wrapper.truncate(5)));
         assertAll("out-of-bounds element",
-            () -> assertEquals("Qwe123", String.valueOf(wrapper.truncate(-1)), () -> "Should not remove"),
-            () -> assertEquals("Qwe123", String.valueOf(wrapper.truncate(6)), () -> "Should not remove")
+            () -> assertEquals(BASE_TEMPLATE, String.valueOf(wrapper.truncate(-1)), () -> "Should not remove"),
+            () -> assertEquals(BASE_TEMPLATE, String.valueOf(wrapper.truncate(6)), () -> "Should not remove")
         );
     }
 

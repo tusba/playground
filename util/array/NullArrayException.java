@@ -6,7 +6,7 @@ public class NullArrayException extends Exception {
 
     @Override
     public String getMessage() {
-        return "An array cannot be null";
+        return "The array cannot be null";
     }
 
 }
