@@ -57,6 +57,12 @@ class TestChallengeConcurrent implements ITest {
     }
 
     @ChallengeTest
+    @DisplayName("Test min window substring (concurrent, not long)")
+    public void performQuickly() {
+        assertTimeout(Duration.ofMillis(100), this::baseTest);
+    }
+
+    @ChallengeTest
     @DisplayName("Test min window substring (concurrent, 10 times in a row)")
     void multiplePerform10() {
         assertTimeoutPreemptively(Duration.ofSeconds(1), () -> {
