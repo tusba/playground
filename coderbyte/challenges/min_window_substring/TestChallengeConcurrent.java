@@ -9,9 +9,11 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.commons.annotation.Testable;
 
 import util.annotation.ChallengeTest;
+import util.annotation.MultithreadedTest;
 import util.test.ITest;
 
 @DisplayName("Min Window Substring challenge (concurrent)")
+@MultithreadedTest
 @Testable
 class TestChallengeConcurrent implements ITest {
 
