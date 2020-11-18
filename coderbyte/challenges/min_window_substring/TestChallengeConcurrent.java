@@ -12,7 +12,6 @@ import org.junit.platform.commons.annotation.Testable;
 import util.annotation.ChallengeTest;
 import util.test.ITest;
 
-@Disabled("Until concurrent code will be correct")
 @DisplayName("Min Window Substring challenge (concurrent)")
 @Testable
 class TestChallengeConcurrent implements ITest {
@@ -58,6 +57,7 @@ class TestChallengeConcurrent implements ITest {
         baseTest();
     }
 
+    @Disabled("Until it will be investigated and fixed (sometimes executes infinitely)")
     @ChallengeTest
     @DisplayName("Test min window substring (concurrent, multiple)")
     void multiplePerform() {
