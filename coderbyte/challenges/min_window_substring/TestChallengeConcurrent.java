@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.commons.annotation.Testable;
@@ -57,11 +56,20 @@ class TestChallengeConcurrent implements ITest {
         baseTest();
     }
 
-    @Disabled("Until it will be investigated and fixed (sometimes executes infinitely)")
     @ChallengeTest
-    @DisplayName("Test min window substring (concurrent, multiple)")
-    void multiplePerform() {
-        assertTimeout(Duration.ofSeconds(10), new Multiple(10));
+    @DisplayName("Test min window substring (concurrent, 10 times in a row)")
+    void multiplePerform10() {
+        assertTimeoutPreemptively(Duration.ofSeconds(1), () -> {
+            for (int i = 0; i < 10; i++) {
+                baseTest();
+            }
+        });
+    }
+
+    @ChallengeTest
+    @DisplayName("Test min window substring (concurrent, 20 times in a row)")
+    void multiplePerform20() {
+        assertTimeoutPreemptively(Duration.ofSeconds(2), new Multiple(20));
     }
 
 }
