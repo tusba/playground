@@ -4,16 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.commons.annotation.Testable;
 
 import util.annotation.ChallengeTest;
+import util.annotation.MultithreadedTest;
 import util.test.ITest;
 
-@Disabled("Until concurrent code will be correct")
 @DisplayName("Min Window Substring challenge (concurrent)")
+@MultithreadedTest
 @Testable
 class TestChallengeConcurrent implements ITest {
 
@@ -59,9 +59,25 @@ class TestChallengeConcurrent implements ITest {
     }
 
     @ChallengeTest
-    @DisplayName("Test min window substring (concurrent, multiple)")
-    void multiplePerform() {
-        assertTimeout(Duration.ofSeconds(10), new Multiple(10));
+    @DisplayName("Test min window substring (concurrent, not long)")
+    public void performQuickly() {
+        assertTimeout(Duration.ofMillis(100), this::baseTest);
+    }
+
+    @ChallengeTest
+    @DisplayName("Test min window substring (concurrent, 10 times in a row)")
+    void multiplePerform10() {
+        assertTimeoutPreemptively(Duration.ofSeconds(1), () -> {
+            for (int i = 0; i < 10; i++) {
+                baseTest();
+            }
+        });
+    }
+
+    @ChallengeTest
+    @DisplayName("Test min window substring (concurrent, 20 times in a row)")
+    void multiplePerform20() {
+        assertTimeoutPreemptively(Duration.ofSeconds(2), new Multiple(20));
     }
 
 }
