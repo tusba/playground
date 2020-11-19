@@ -4,7 +4,7 @@ import static java.util.logging.Logger.*;
 
 import coderbyte.challenges.min_window_substring.search.SearchCriteria;
 import coderbyte.challenges.min_window_substring.search.SearchState;
-import decorators.DSyncResult;
+import entities.IResult;
 import entities.Result;
 import util.array.CharArray;
 import util.array.ICharArray;
@@ -18,7 +18,7 @@ public class ChallengeConcurrent implements IChallenge, Runnable {
      * incapsulation of the minimal found substring
      * will be shared among multiple threads
      */
-    private DSyncResult<String> minWindow;
+    private IResult<String> minWindow;
 
     private SearchCriteria params;
 
@@ -73,8 +73,7 @@ public class ChallengeConcurrent implements IChallenge, Runnable {
 
     /** initialize synchronized members */
     private void init() {
-        minWindow = new DSyncResult<>();
-        minWindow.decorate(new Result<>(""));
+        minWindow = new Result<>("");
 
         search = new SearchState();
     }
