@@ -13,7 +13,7 @@ import util.test.ITest;
 @Testable
 public class TestChallenge implements ITest {
 
-    private final static IChallenge challenge = new Challenge();
+    private static final IChallenge challenge = new Challenge();
 
     @ChallengeTest
     @DisplayName("Test first reverse")
