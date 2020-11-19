@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Test;
 
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-@Tag("challenge")
+@Tag(ChallengeTest.TAG)
 @Test
 public @interface ChallengeTest {
+
+    public static final String TAG = "challenge";
+
 }
