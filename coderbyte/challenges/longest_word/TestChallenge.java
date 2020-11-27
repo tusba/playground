@@ -32,6 +32,8 @@ public class TestChallenge implements ITest {
         assertEquals("", challenge.longestWord(null));
         assertEquals("time", challenge.longestWord("fun&!! time"));
         assertEquals("love", challenge.longestWord("I love dogs"));
+        assertEquals("123456789", challenge.longestWord("123456789 98765432"));
+        assertEquals("confusing", challenge.longestWord("a confusing /:sentence:/[ this is not!!!!!!!~"));
     }
 
 }
