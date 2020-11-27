@@ -146,10 +146,13 @@ public class ChallengeConcurrent implements IChallenge, Runnable {
         if (lenWhere < lenWhat || lenWhat == 0)
             return getMinWindow();
 
-        search.plan(lenWhere - lenWhat + 1); // maximum number of searches to be performed concurrently
-        int searchCount = 0;
+        int maxThreads = lenWhere - lenWhat + 1; // maximum number of searches to be performed concurrently
 
-        for (int i = 0; i <= lenWhere - lenWhat; i++) {
+        search.plan(maxThreads);
+        int searchCounter = 0;
+        Thread[] newThreads = new Thread[maxThreads];
+
+        for (int i = 0; i < maxThreads; i++) {
             // no need to perform a search if the needle doesn't contain the current character
             if (needle.indexOf(haystack.charAt(i)) == -1) {
                 search.skip(); // decrease the total number of planned concurrent searches
@@ -158,17 +161,19 @@ public class ChallengeConcurrent implements IChallenge, Runnable {
 
             String newHaystack = haystack.substring(i);
             Thread newThread = new Thread(new ChallengeConcurrent(this, newHaystack),
-                "Search #" + ++searchCount + " [" + i + ": " + newHaystack + "]");
+                "Search #" + ++searchCounter + " [" + i + ": " + newHaystack + "]");
+            newThreads[i] = newThread;
+            newThread.start();
+        }
 
+        for (int i = 0; i < maxThreads && newThreads[i] != null; i++) {
             try {
-                newThread.join();
+                newThreads[i].join();
             } catch (InterruptedException e) {
                 getLogger(GLOBAL_LOGGER_NAME).severe(() -> "The main thread was interrupted: " + e.getMessage());
                 errorOccurred = true;
                 break;
             }
-
-            newThread.start();
         }
 
         if (!errorOccurred) {
