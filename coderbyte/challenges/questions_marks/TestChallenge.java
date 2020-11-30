@@ -22,12 +22,16 @@ public class TestChallenge implements ITest {
     public void perform() {
         assertAll("Should be true",
             () -> assertTrue(challenge.questionsMarks("acc?7??sss?3rr1??????5")),
-            () -> assertTrue(challenge.questionsMarks("arrb6???4xxbl5???eee5"))
+            () -> assertTrue(challenge.questionsMarks("arrb6???4xxbl5???eee5")),
+            () -> assertTrue(challenge.questionsMarks("5??aaaaaaaaaaaaaaaaaaa?5?a??5"))
         );
 
         assertAll("Should be false",
             () -> assertFalse(challenge.questionsMarks("")),
-            () -> assertFalse(challenge.questionsMarks("aa6?9"))
+            () -> assertFalse(challenge.questionsMarks("aa6?9")),
+            () -> assertFalse(challenge.questionsMarks("4?5?4?aamm9")),
+            () -> assertFalse(challenge.questionsMarks("5??aaaaaaaaaaaaaaaaaaa?5?5")),
+            () -> assertFalse(challenge.questionsMarks("mbbv???????????4??????ddsdsdcc9?"))
         );
     }
 
