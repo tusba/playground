@@ -6,6 +6,4 @@ public interface IChallenge {
 
     String findIntersection(String[] lists);
 
-    int[] findIntersection(int[] first, int[] second);
-
 }
