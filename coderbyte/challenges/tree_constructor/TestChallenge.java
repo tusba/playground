@@ -1,12 +1,15 @@
 package coderbyte.challenges.tree_constructor;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.platform.commons.annotation.Testable;
 
+import coderbyte.challenges.tree_constructor.util.Pairs;
 import util.annotation.ChallengeTest;
+import util.annotation.UtilityTest;
 import util.test.ITest;
 
 @DisplayName("Tree Constructor challenge")
@@ -14,6 +17,20 @@ import util.test.ITest;
 public class TestChallenge implements ITest {
 
     private static final IChallenge challenge = new Challenge();
+
+    @DisplayName("Test pair parsing and conversion")
+    @UtilityTest
+    void parsePairs() {
+        Pairs convertor = new Pairs();
+        assertArrayEquals(new int[] { -1, 2 }, convertor.convert("(-1,2)"));
+        assertArrayEquals(new int[] { 0, 3 }, convertor.convert("(0,3)"));
+
+        int[][] intPairs = new int[][] { {-2, 4}, {10, 0}, {99, -100} };
+        int[][] resultPairs = convertor.convert(new String[] { "(-2,4)", "(10,0)", "(99,-100)" });
+        for (int i = 0; i < intPairs.length; i++) {
+            assertArrayEquals(intPairs[i], resultPairs[i]);
+        }
+    }
 
     @ChallengeTest
     @DisplayName("Test tree constructor")
