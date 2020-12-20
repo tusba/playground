@@ -37,7 +37,16 @@ public class TestChallenge implements ITest {
     @Override
     public void perform() {
         assertTrue(challenge.treeConstructor(new String[] { "(1,2)", "(2,4)", "(5,7)", "(7,2)", "(9,5)" }));
+        assertTrue(challenge.treeConstructor(new String[] { "(1,2)", "(2,4)", "(7,2)" }));
+        assertTrue(challenge.treeConstructor(new String[] { "(10,20)" }));
+        assertTrue(challenge.treeConstructor(new String[] { "(1,2)", "(2,4)", "(7,4)" }));
+        assertTrue(challenge.treeConstructor(new String[] { "(5,6)", "(6,3)", "(2,3)", "(12,5)" }));
+        assertTrue(challenge.treeConstructor(new String[] { "(10,20)", "(20,50)" }));
+        assertTrue(challenge.treeConstructor(new String[] { "(2,3)", "(1,2)", "(4,9)", "(9,3)", "(12,9)", "(6,4)" }));
+        assertFalse(challenge.treeConstructor(new String[] { "(3,2)", "(2,4)", "(5,7)", "(7,2)", "(9,5)" }));
+        assertFalse(challenge.treeConstructor(new String[] { "(2,5)", "(2,6)" }));
         assertFalse(challenge.treeConstructor(new String[] { "(1,2)", "(3,2)", "(2,12)", "(5,2)" }));
+        assertFalse(challenge.treeConstructor(new String[] { "(2,3)", "(1,2)", "(4,9)", "(9,3)", "(12,9)", "(6,4)", "(1,9)" }));
     }
 
 }

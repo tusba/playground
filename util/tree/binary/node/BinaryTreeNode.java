@@ -16,10 +16,6 @@ public class BinaryTreeNode<T> extends TreeNode<T> implements IBinaryTreeNode<T>
         super(value, parent);
     }
 
-    public BinaryTreeNode(T value, T parentValue) {
-        super(value, parentValue);
-    }
-
     @Override
     public IBinaryTreeNode<T> getLeft() {
         return left;

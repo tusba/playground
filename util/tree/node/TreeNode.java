@@ -15,10 +15,6 @@ public class TreeNode<T> implements ITreeNode<T> {
         this.parent = parent;
     }
 
-    public TreeNode(T value, T parentValue) {
-        this(value, new TreeNode<>(parentValue));
-    }
-
     @Override
     public ITreeNode<T> getParent() {
         return parent;
