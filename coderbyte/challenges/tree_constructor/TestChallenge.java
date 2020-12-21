@@ -21,12 +21,12 @@ public class TestChallenge implements ITest {
     @DisplayName("Test pair parsing and conversion")
     @UtilityTest
     void parsePairs() {
-        Pairs convertor = new Pairs();
-        assertArrayEquals(new int[] { -1, 2 }, convertor.convert("(-1,2)"));
-        assertArrayEquals(new int[] { 0, 3 }, convertor.convert("(0,3)"));
+        Pairs converter = new Pairs();
+        assertArrayEquals(new int[] { -1, 2 }, converter.convert("(-1,2)"));
+        assertArrayEquals(new int[] { 0, 3 }, converter.convert("(0,3)"));
 
         int[][] intPairs = new int[][] { {-2, 4}, {10, 0}, {99, -100} };
-        int[][] resultPairs = convertor.convert(new String[] { "(-2,4)", "(10,0)", "(99,-100)" });
+        int[][] resultPairs = converter.convert(new String[] { "(-2,4)", "(10,0)", "(99,-100)" });
         for (int i = 0; i < intPairs.length; i++) {
             assertArrayEquals(intPairs[i], resultPairs[i]);
         }

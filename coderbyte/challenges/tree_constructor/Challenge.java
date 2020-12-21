@@ -12,7 +12,9 @@ public class Challenge implements IChallenge {
     private final Map<Integer, Node> nodes = new HashMap<>();
 
     private void reset() {
-        nodes.clear();
+        if (nodes.size() > 0) {
+            nodes.clear();
+        }
     }
 
     private Node obtainNode(int value) {
@@ -44,11 +46,8 @@ public class Challenge implements IChallenge {
 
     @Override
     public boolean treeConstructor(String[] pairs) {
-        reset();
-
-        Pairs convertor = new Pairs();
-
-        return treeConstructor(convertor.convert(pairs));
+        Pairs converter = new Pairs();
+        return treeConstructor(converter.convert(pairs));
     }
 
     @Override
@@ -56,10 +55,10 @@ public class Challenge implements IChallenge {
         reset();
 
         for (int[] pair : pairs) {
+            Node node = obtainNode(pair[0]);
             Node parent = obtainNode(pair[1]);
             try {
-                int value = pair[0];
-                nodes.put(value, new Node(value, parent));
+                node.bindParent(parent);
             } catch (NodeException e) {
                 return false;
             }

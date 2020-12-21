@@ -5,19 +5,7 @@ import util.tree.binary.node.BinaryTreeNode;
 public class Node extends BinaryTreeNode<Integer> {
 
     private void bindParent() throws NodeException {
-        Node parent = this.getParent();
-
-        if (parent.canAddLeft(value)) {
-            parent.left = this;
-            return;
-        }
-
-        if (parent.canAddRight(value)) {
-            parent.right = this;
-            return;
-        }
-
-        throw new NodeException();
+        bindParent(getParent());
     }
 
     private boolean canAddLeft(int value) {
@@ -35,6 +23,22 @@ public class Node extends BinaryTreeNode<Integer> {
     public Node(Integer value, Node parent) throws NodeException {
         super(value, parent);
         bindParent();
+    }
+
+    public void bindParent(Node parentNode) throws NodeException {
+        if (parentNode.canAddLeft(value)) {
+            parentNode.left = this;
+            parent = parentNode;
+            return;
+        }
+
+        if (parentNode.canAddRight(value)) {
+            parentNode.right = this;
+            parent = parentNode;
+            return;
+        }
+
+        throw new NodeException();
     }
 
     @Override
